@@ -1,0 +1,43 @@
+
+  GET|HEAD        / ................................................................................................................................ 
+  POST            _ignition/execute-solution ......................... ignition.executeSolution › Spatie\LaravelIgnition › ExecuteSolutionController
+  GET|HEAD        _ignition/health-check ..................................... ignition.healthCheck › Spatie\LaravelIgnition › HealthCheckController
+  POST            _ignition/update-config .................................. ignition.updateConfig › Spatie\LaravelIgnition › UpdateConfigController
+  GET|HEAD        answer ..................................................................................... answer.index › AnswerController@index
+  POST            answer ..................................................................................... answer.store › AnswerController@store
+  GET|HEAD        answer/create ............................................................................ answer.create › AnswerController@create
+  GET|HEAD        answer/{answer} .............................................................................. answer.show › AnswerController@show
+  PUT|PATCH       answer/{answer} .......................................................................... answer.update › AnswerController@update
+  DELETE          answer/{answer} ........................................................................ answer.destroy › AnswerController@destroy
+  GET|HEAD        answer/{answer}/edit ......................................................................... answer.edit › AnswerController@edit
+  POST            answer/{answer}/question_answer ......................................................... question_answer › AnswerController@store
+  GET|HEAD        api/user ......................................................................................................................... 
+  GET|HEAD        confirm-password ...................................................... password.confirm › Auth\ConfirmablePasswordController@show
+  POST            confirm-password ........................................................................ Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard .............................................................................................................. dashboard
+  POST            email/verification-notification ........................... verification.send › Auth\EmailVerificationNotificationController@store
+  GET|HEAD        forgot-password ....................................................... password.request › Auth\PasswordResetLinkController@create
+  POST            forgot-password .......................................................... password.email › Auth\PasswordResetLinkController@store
+  GET|HEAD        login ......................................................................... login › Auth\AuthenticatedSessionController@create
+  POST            login .................................................................................. Auth\AuthenticatedSessionController@store
+  POST            logout ...................................................................... logout › Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        question ............................................................................... question.index › QuestionController@index
+  POST            question ............................................................................... question.store › QuestionController@store
+  GET|HEAD        question/create ...................................................................... question.create › QuestionController@create
+  GET|HEAD        question/mypage ...................................................................... question.mypage › QuestionController@mydata
+  GET|HEAD        question/{question} ...................................................................... question.show › QuestionController@show
+  PUT|PATCH       question/{question} .................................................................. question.update › QuestionController@update
+  DELETE          question/{question} ................................................................ question.destroy › QuestionController@destroy
+  GET|HEAD        question/{question}/edit ................................................................. question.edit › QuestionController@edit
+  POST            question/{question}/favorites ............................................................... favorites › FavoriteController@store
+  POST            question/{question}/unfavorites ......................................................... unfavorites › FavoriteController@destroy
+  GET|HEAD        register ......................................................................... register › Auth\RegisteredUserController@create
+  POST            register ..................................................................................... Auth\RegisteredUserController@store
+  POST            reset-password ................................................................ password.update › Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} ........................................................ password.reset › Auth\NewPasswordController@create
+  GET|HEAD        sanctum/csrf-cookie .................................................................. Laravel\Sanctum › CsrfCookieController@show
+  GET|HEAD        verify-email ............................................... verification.notice › Auth\EmailVerificationPromptController@__invoke
+  GET|HEAD        verify-email/{id}/{hash} ............................................... verification.verify › Auth\VerifyEmailController@__invoke
+
+                                                                                                                                 Showing [39] routes
+
