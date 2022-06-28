@@ -19,7 +19,10 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = Question::getAllOrderByUpdated_at();
-        return view('question.index', compact('questions'));
+        $answers = Answer::answers_getAllOrderByUpdated_at();
+        // ddd($answers);
+        
+        return view('question.index', compact('questions','answers'));
     }
 
     /**
@@ -73,8 +76,8 @@ class QuestionController extends Controller
     {
         $question = Question::find($id);
         $question_id = $id;
-        $answers = Answer::find($question_id);
-        // answers_getAllOrderByUpdated_at();
+        // $answers = Answer::find($question_id)
+        $answers = Answer::answers_getAllOrderByUpdated_at();
         // ddd($question);
         return view('question.show', compact('question','answers'));
     }

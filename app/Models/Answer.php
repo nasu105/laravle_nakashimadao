@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Question;
 
 class Answer extends Model
 {
@@ -15,6 +16,8 @@ class Answer extends Model
         'updated_at',
         ];
         
+    protected $table = "answers";
+        
         
     public function Question()
     {
@@ -25,6 +28,15 @@ class Answer extends Model
     {
         return self::orderBy('updated_at', 'desc')->get();
     }
-
     
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class);
+    }
+
 }

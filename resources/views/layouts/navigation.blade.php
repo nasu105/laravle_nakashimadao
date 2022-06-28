@@ -1,7 +1,7 @@
 <!-- resources/views/layouts/navigation.blade.php -->
 
 <div class="top-image" >  
-  <img width="100%" height='330' src="{{ asset('image/gees.jpg') }}" alt="">
+  <img width="100%" src="{{ asset('image/gs learning town.jpg') }}" alt="">
 </div>
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
   

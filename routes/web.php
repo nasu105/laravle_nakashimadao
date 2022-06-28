@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('question/{question}/favorites',[FavoriteController::class, 'store'])->name('favorites');
     Route::post('question/{question}/unfavorites',[FavoriteController::class, 'destroy'])->name('unfavorites');
     Route::get('/question/mypage',[QuestionController::class, 'mydata'])->name('question.mypage');
+    Route::post('answer/{answer}/selectbest',[AnswerController::class,'selectbest'])->name('selectbest');
     Route::resource('question', QuestionController::class);
     Route::resource('answer', AnswerController::class);
 });

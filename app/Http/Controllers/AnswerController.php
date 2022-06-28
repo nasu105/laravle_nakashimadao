@@ -89,7 +89,8 @@ class AnswerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $answer = \App\Models\Answer::find($id);
+        return view('answer.edit', compact('answer'));
     }
 
     /**
@@ -101,7 +102,7 @@ class AnswerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -115,5 +116,15 @@ class AnswerController extends Controller
         //
     }
     
+    public function selectbest(Request $request, $id)
+    {
+      // ddd($request);
+      // データ更新処理
+      // $result = \App\Models\Answer::find($id)->update($request->all());
+      // ddd($result);
+      $result = \App\Models\Answer::find($id)->update($request->all());
+      $question_id = $request->question_id;
+      return redirect()->route('question.show',['question' => $question_id]);
+    }
     
 }
