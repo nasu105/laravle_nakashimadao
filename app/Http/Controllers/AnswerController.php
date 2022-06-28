@@ -52,7 +52,7 @@ class AnswerController extends Controller
           ->withInput()
           ->withErrors($validator);
       }
-    //   ddd($question);
+     // ddd($question);
       
       // 編集フォームから送信されてきたデータとユーザーIDをマージし、DBにinsertする
       $data = $request->merge(['user_id' => Auth::user()->id])->all();
@@ -102,9 +102,25 @@ class AnswerController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+      //バリデーション
+      $validator = Validator::make($request->all(), [
+        'body' => 'required | max:191',
+      ]);
+      //バリデーション:エラー
+      if ($validator->fails()) {
+        return redirect()
+          ->route('answer.edit', $id)
+          ->withInput()
+          ->withErrors($validator);
+      }
+      //データ更新処理
+      // ddd($request);
+      $question_id = $request->question_id;
+      // ddd($question_id);
+      $result = \App\Models\Answer::find($id)->update($request->all());
+      // ddd($result);
+      return redirect()->route('question.show',$question_id);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -123,8 +139,17 @@ class AnswerController extends Controller
       // $result = \App\Models\Answer::find($id)->update($request->all());
       // ddd($result);
       $result = \App\Models\Answer::find($id)->update($request->all());
+      // ddd($result);
       $question_id = $request->question_id;
       return redirect()->route('question.show',['question' => $question_id]);
     }
+    
+    public function delete_bestanswer(Request $request, $id)
+    {
+      $result = \App\Models\Answer::find($id)->update($request->all());
+      $question_id = $request->question_id;
+      return redirect()->route('question.show',['question' => $question_id]);
+    }
+    
     
 }

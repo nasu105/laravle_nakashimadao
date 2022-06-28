@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+use App\Models\Question;
+use App\Models\Answer;
+use App\Models\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -13,7 +18,40 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+       
+        //$users = User::getAllOrderByUpdated_at();
+        //ddd($users);
+        //$questions = Question::getAllOrderByUpdated_at();
+        //$answers = Answer::answers_getAllOrderByUpdated_at();
+        
+         //ddd($answers);
+    //       $questions = User::query()
+    //   ->find(Auth::user()->id)
+    //   ->userQuestions()
+    //   ->orderBy('created_at', 'desc')
+    //   ->get();
+       //ddd($questions);
+      $answers = User::query()
+      ->find(Auth::user()->id)
+      ->userAnswers()
+      ->orderBy('created_at', 'desc')
+      ->get();
+       //ddd( $answers);
+      $questions = User::query()
+       ->find(Auth::user()->id)
+       ->userQuestions()
+       ->orderBy('created_at', 'desc')
+       ->get();
+      // ddd($questions);
+      $favorites = User::query()
+       ->find(Auth::user()->id)
+       ->questions()
+       ->orderBy('created_at', 'desc')
+       ->get();
+    // ddd($favorites);  
+     
+        return view('user.index',compact('questions','answers','favorites'));
+        
     }
 
     /**
@@ -24,6 +62,7 @@ class UserController extends Controller
     public function create()
     {
         //
+        //return view('user.create');
     }
 
     /**
@@ -46,6 +85,7 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**

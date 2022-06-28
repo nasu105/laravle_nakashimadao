@@ -1,4 +1,9 @@
 <!-- resources/views/answer/edit.blade.php -->
+{{--<?php
+
+ddd($answer->id);
+
+?>--}}
 
 <x-app-layout>
   <x-slot name="header">
@@ -12,15 +17,16 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
           @include('common.errors')
-          <form class="mb-6" action="{{ route('answer.update',$answer->id) }}" method="POST">
+          <form class="mb-6" action="{{ route('answer.update', $answer->id) }}" method="POST">
             @method('put')
             @csrf
+            <input type="hidden" name="question_id" value="{{$answer->question_id}}">
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="answer">answer</label>
               <input class="border py-2 px-3 text-grey-darkest" type="text" name="body" id="body" value="{{$answer->body}}">
             </div>
             <div class="flex justify-evenly">
-              <a href="{{ route('question.show') }}" class="block text-center w-5/12 py-3 mt-6 font-medium tracking-widest text-black uppercase bg-gray-100 shadow-sm focus:outline-none hover:bg-gray-200 hover:shadow-none">
+              <a href="{{ route('question.show', [$answer->question_id]) }}" class="block text-center w-5/12 py-3 mt-6 font-medium tracking-widest text-black uppercase bg-gray-100 shadow-sm focus:outline-none hover:bg-gray-200 hover:shadow-none">
                 Back
               </a>
               <button type="submit" class="w-5/12 py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">

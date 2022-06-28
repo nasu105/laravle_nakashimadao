@@ -21,6 +21,12 @@ class QuestionController extends Controller
         $questions = Question::getAllOrderByUpdated_at();
         $answers = Answer::answers_getAllOrderByUpdated_at();
         // ddd($answers);
+        // $lookfor_bestanswer = Question::query()
+        // ->answers()
+        // ->orderBy('created_at', 'desc')
+        // ->get();
+        
+        // ddd($lookfor_bestanswer);
         
         return view('question.index', compact('questions','answers'));
     }
@@ -74,12 +80,18 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $question = Question::find($id);
+        // $question = Question::find($id);
         $question_id = $id;
+        $question = Question::find($id)->load('answers');
+        $bestanswer = $question->answers->where('bestanswer', true)->first();
+        // ddd($bestanswer);
         // $answers = Answer::find($question_id)
         $answers = Answer::answers_getAllOrderByUpdated_at();
+        // $questions = Question::all()->load('answers')->orderBy('updated_at', 'desc');
         // ddd($question);
-        return view('question.show', compact('question','answers'));
+        // $bestanswer = $question->bestanswer();
+        // ddd($bestanswer);
+        return view('question.show', compact('question','answers','bestanswer'));
     }
 
     /**
@@ -105,6 +117,7 @@ class QuestionController extends Controller
     public function update(Request $request, $id)
     {
       //バリデーション
+      ddd($question);
       $validator = Validator::make($request->all(), [
         'question' => 'required | max:191',
         'description' => 'required',
@@ -118,6 +131,7 @@ class QuestionController extends Controller
       }
       //データ更新処理
       $result = Question::find($id)->update($request->all());
+      // ddd($result);
       return redirect()->route('question.index');
     }
 

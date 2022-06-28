@@ -41,4 +41,10 @@ class Question extends Model
     {
         return self::orderBy('updated_at', 'desc')->get();
     }
+    
+    // public static function bestanswer()
+    // {
+    //     return $this->hasMany(Answer::class)->where('bestanswer', true)->firstOrFail();
+    //     // return self::whereRelation('answers', 'bestanswer', true)->first();
+    // }
 }
