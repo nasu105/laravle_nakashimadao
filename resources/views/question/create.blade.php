@@ -1,6 +1,9 @@
 <!-- resources/views/quesion/create.blade.php -->
 
 <x-app-layout>
+ @section('title')
+  @include('layouts.navigation')
+  @endsection 
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-pink-600 leading-tight">
       {{ __('質問する-Create New Question-') }}

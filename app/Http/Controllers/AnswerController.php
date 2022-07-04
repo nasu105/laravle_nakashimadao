@@ -141,6 +141,7 @@ class AnswerController extends Controller
       $result = \App\Models\Answer::find($id)->update($request->all());
       // ddd($result);
       $question_id = $request->question_id;
+      $question_result = \App\Models\Question::find($question_id)->update($request->all());
       return redirect()->route('question.show',['question' => $question_id]);
     }
     
@@ -148,6 +149,7 @@ class AnswerController extends Controller
     {
       $result = \App\Models\Answer::find($id)->update($request->all());
       $question_id = $request->question_id;
+      $question_result = \App\Models\Question::find($question_id)->update($request->all());
       return redirect()->route('question.show',['question' => $question_id]);
     }
     

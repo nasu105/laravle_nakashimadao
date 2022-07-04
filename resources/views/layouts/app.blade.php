@@ -19,7 +19,10 @@
     <body class="font-sans antialiased">
         <!--<div class="min-h-screen bg-gray-100">-->
         <div>
-            @include('layouts.navigation')
+            <!--includeを切り取って、navigationを使うページだけに入れていく。-->
+            
+            {{--@include('layouts.navigation')--}}
+            @yield('title')
 
             <!-- Page Heading -->
         

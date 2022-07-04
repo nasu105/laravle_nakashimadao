@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\User;
 use Auth;
+use Spatie\Searchable\Search;
 
 class QuestionController extends Controller
 {
@@ -16,19 +17,35 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::getAllOrderByUpdated_at();
+        // $questions = Question::getAllOrderByUpdated_at();
         $answers = Answer::answers_getAllOrderByUpdated_at();
         // ddd($answers);
-        // $lookfor_bestanswer = Question::query()
-        // ->answers()
+        // $question = Question::find(id)->load('answers');
+        // $lookfor_bestanswer = $question->answers->where('bestanswer', true)->first();
+        
+        // $lookfor_bestanswer = Question::answers()
         // ->orderBy('created_at', 'desc')
         // ->get();
-        
         // ddd($lookfor_bestanswer);
         
-        return view('question.index', compact('questions','answers'));
+        // 検索機能実装
+        $keyword = $request->input('keyword');
+        
+        $query = \App\Models\Question::query();
+        // ddd($query);
+        
+        if(!empty($keyword)) {
+            $query->where('question', 'LIKE', "%{$keyword}%")
+                ->orWhere('description', 'LIKE', "%{$keyword}%");
+        }
+        
+        $questions = $query->orderBy('created_at', 'desc')->get();
+        
+        // return view('question.index', compact('questions', 'keyword'));
+        
+        return view('question.index', compact('questions','answers','keyword'));
     }
 
     /**
@@ -155,9 +172,46 @@ class QuestionController extends Controller
        ->userQuestions()
        ->orderBy('created_at', 'desc')
        ->get();
+       $keyword = "";
        
-      return view('question.index', compact('questions'));
+      return view('question.index', compact('questions', 'keyword'));
     }
     
+    public function unresolved(Request $request)
+    {
+        $answers = Answer::answers_getAllOrderByUpdated_at();
+        $keyword = $request->input('keyword');
+        
+        $query = \App\Models\Question::query();
+        // ddd($query);
+        
+        if(!empty($keyword)) {
+            $query->where('question', 'LIKE', "%{$keyword}%")
+                ->orWhere('description', 'LIKE', "%{$keyword}%");
+        }
+        
+        $questions = $query->orderBy('created_at', 'desc')->where('flag_bestanswer' , false)->get();
+        
+        return view('question.index', compact('questions','answers','keyword'));
+    }
+    
+    
+    public function resolved(Request $request)
+    {
+        $answers = Answer::answers_getAllOrderByUpdated_at();
+        $keyword = $request->input('keyword');
+        
+        $query = \App\Models\Question::query();
+        // ddd($query);
+        
+        if(!empty($keyword)) {
+            $query->where('question', 'LIKE', "%{$keyword}%")
+                ->orWhere('description', 'LIKE', "%{$keyword}%");
+        }
+        
+        $questions = $query->orderBy('created_at', 'desc')->where('flag_bestanswer' , true)->get();
+        
+        return view('question.index', compact('questions','answers','keyword'));
+    }
 
 }

@@ -1,4 +1,7 @@
 <x-app-layout>
+@section('title')
+  @include('layouts.navigation')
+  @endsection
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-non">
             {{ __('Dashboard') }}

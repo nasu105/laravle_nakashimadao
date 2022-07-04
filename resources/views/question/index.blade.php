@@ -2,6 +2,9 @@
 <!--トップジーズアカデミー-->
 
 <x-app-layout>
+  @section('title')
+  @include('layouts.navigation')
+  @endsection
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-blue-600 leading-tight">
       {{ __('質問一覧') }}
@@ -12,31 +15,58 @@
     <div class="max-w-7xl mx-auto sm:w-10/12 md:w-8/10 lg:w-8/12">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
-          <!--サイト内検索-->
+          
+          <!--サイト内検索-->  
+          <form action="{{ route('question.index') }}" method="GET">
+            @csrf
           <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="">サイト内検索</label>
-          <input class="form-control w-80 border text-grey-darkest px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300" placeholder="サイト内検索" type="text" name="" id="">
+          <input class="form-control w-80 border text-grey-darkest px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300" placeholder="サイト内検索" type="text" name="keyword" value="{{ $keyword }}" >
+          <input type="submit" value="検索">
           <table class="text-center w-full border-collapse">
             <thead>
               <tr>
                 <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark border-b border-grey-light">question</th>
               </tr> 
             </thead>
+          </form>
+            
+            <!--解決・未解決ボタン-->
+            <form action="{{ route('resolved') }}" method="POST">
+            @csrf
+            <button type="submit"class="px-2 py-1 text-red-500 border-red-500 font-semibold rounded-lg hover:bg-red-100">
+                解決済
+            </button>
+            </form>
+            
+            <form action="{{ route('unresolved') }}" method="POST">
+            @csrf
+              <button type="submit"class="px-2 py-1 text-red-500 border-red-500 font-semibold rounded-lg hover:bg-red-100">
+                  未解決
+              </button>
+            </form> 
+            
             <tbody>
                 @foreach ($questions as $question)
                 <tr class="hover:bg-grey-lighter">
                   <td class="py-4 px-6 border-b border-grey-light">
                     <!-- 詳細&回答画面へのリンク -->
-                    <a href="{{ route('question.show', $question->id) }}">
+                    <a href="{{ route('question.show', $question->id) }}"
                     <div class="flex flex-row">
                       <div class="flex-col w-1/6">
                         <!--まだ機能つけてない部分　なすさんお願いします〜-->
-                          {{--@if ($bestanswer)--}}
+                          @if ($question->flag_bestanswer == 0)
                           <div class="justify-items-start">
-                            <p class="text-grey-dark">{{ "うけつけちゅう" }}</p>
-                          </div>  
+                            <p class="text-grey-dark">{{ "受付中" }}</p>
+                          </div>
+                          <!--ベストアンサーがあれば解決済み-->
+                          @elseif($question->flag_bestanswer ==1)
+                          <div class="justify-items-start">
+                            <p class="text-grey-dark">{{ "解決済" }}</p>
+                          </div> 
+                          @endif
                         <!--回答数を表示-->
                         <div class="">
-                          <p class="text-grey-dark">{{$question->answers->count()}}</p>
+                          <p class="text-grey-dark text-xl text-bold">{{$question->answers->count()}}</p>
                           <p class="text-grey-dark">{{ "回答" }}</p>
                         </div>  
                       </div>
